@@ -6,6 +6,7 @@ import { sha1 } from 'react-native-sha1';
 
 
 const PASSWORD_API = "https://api.pwnedpasswords.com/range/"  //{first 5 hash chars}
+const PREFIX_CHARS = 5  // Amount of characters in the hash prefix.
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -26,18 +27,28 @@ export default class App extends Component<Props> {
   }
 
   async getHashSuffixesFromApi(hash) {
-    const hash_prefix = hash.substring(0,5)
-    const hash_suffix = hash.substring(5)
+    const hash_prefix = hash.substring(0, PREFIX_CHARS)
+    const hash_suffix = hash.substring(PREFIX_CHARS)
     const url = PASSWORD_API + hash_prefix.toString()
 
     return fetch(url)
     .then((response) => {
-      return response.text()
+      return response.text()  // Just text is fetched from the API.
     })
     .then((responseJson) => {
       returned_hashes = this.textResponseToJSON(responseJson)
-      //this.setState({hashes: hash_prefix + hash_suffix + "  " + returned_hashes[hash_suffix]})
-      this.setState({hashes: returned_hashes[hash_suffix]})
+      
+      /* Check if the hash is in the results.  If it is, then
+         set the state to the count of database breaches the
+         hash was found in.  Otherwise, set the state to 0.
+       */
+      let database_breach_count = 0;
+
+      if (hash_suffix in returned_hashes) {
+        database_breach_count = returned_hashes[hash_suffix];
+      }
+
+      this.setState( {hashes: database_breach_count} )
     })
     .catch((error) => {
       console.error(error);
@@ -47,13 +58,6 @@ export default class App extends Component<Props> {
   onGoButtonPress(password) {
     sha1(password).then( hash => {
       this.getHashSuffixesFromApi(hash)
-
-      // TODO:  Make this block asynchronous.
-      if (this.state.hashes.indexOf(hash.substring(5)) > -1) {
-       console.warn("HASH FOUND")
-      } else {
-       console.warn("wtf")
-      }
     })
   }
 
