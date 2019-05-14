@@ -1,11 +1,11 @@
 
 
 import React, { Component } from 'react';
-import { Button, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Platform, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { sha1 } from 'react-native-sha1';
 
 
-const PASSWORD_API = "https://api.pwnedpasswords.com/range/"  //{first 5 hash chars}
+const PASSWORD_API = "https://api.pwnedpasswords.com/range/"
 const PREFIX_CHARS = 5  // Amount of characters in the hash prefix.
 
 type Props = {};
@@ -14,8 +14,12 @@ export default class App extends Component<Props> {
     super(props)
 
     this.state = { text: 'Stuff',
-                   hashes: '' }
+                   hashes: '',
+                   loaded: false,
+                   privacy_mode: false,
+                 }
     this.onGoButtonPress = this.onGoButtonPress.bind(this);
+    this.onTogglePrivacyMode = this.onTogglePrivacyMode.bind(this);
   };
 
   textResponseToJSON(raw_text) {
@@ -49,6 +53,7 @@ export default class App extends Component<Props> {
       }
 
       this.setState( {hashes: database_breach_count} )
+      this.setState( {loaded: true} )
     })
     .catch((error) => {
       console.error(error);
@@ -56,20 +61,30 @@ export default class App extends Component<Props> {
   }
 
   onGoButtonPress(password) {
+    this.setState( {loaded: false} )
     sha1(password).then( hash => {
       this.getHashSuffixesFromApi(hash)
     })
   }
 
+  onTogglePrivacyMode() {
+    this.setState({ privacy_mode: !this.state.privacy_mode })
+  }
+
   render() {
-    isPrivate = false //true
+    let result = ""
+
+    if (this.state.loaded) {
+      result = "Found in " + this.state.hashes + " database breaches."
+    }
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>CheckPwnedPassword</Text>
         <Text style={styles.instructions}>To get started, search here:</Text>
         <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          secureTextEntry={isPrivate}
+          style={styles.input_text}
+          secureTextEntry={this.state.privacy_mode}
           password={true}
           placeholder="To get start type password here"
           onChangeText={(text) => this.setState({text})}
@@ -77,14 +92,20 @@ export default class App extends Component<Props> {
           autoCorrect={false}
           returnKey="go"
         />
-
+        <View style={styles.privacy_container}>
+          <Text style={styles.privacy_mode}>Privacy Mode</Text>
+          <Switch
+            onValueChange = { () => this.onTogglePrivacyMode() }
+            value = {this.state.privacy_mode}
+          />
+        </View>
         <Button
 	        title="Go"
           color="#841584"
           onPress={() => this.onGoButtonPress(this.state.text)}
 	      />
 
-        <Text style={styles.instructions}>{this.state.hashes}</Text>
+        <Text style={styles.occurances}>{result}</Text>
 
       </View>
     );
@@ -98,10 +119,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
+  input_text: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1
+  },
+  occurances: {
     fontSize: 20,
+    marginTop: 30,
+    textAlign: 'center',
+  },
+  privacy_container: {
+    color: '#000000',
+    flexDirection: 'row',
+    margin: 25,
+    textAlign: 'center',
+  },
+  privacy_mode: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+  welcome: {
+    fontSize: 30,
     textAlign: 'center',
     margin: 10,
+    marginBottom: 30,
   },
   instructions: {
     textAlign: 'center',
