@@ -86,7 +86,7 @@ export default class App extends Component<Props> {
   */
   occuranceStyle() {
     var style = {
-      color: 'purple',
+      color: "#3865F5", //'purple',
       fontSize: 20,
       fontWeight: 'bold',
       marginTop: 30,
@@ -94,7 +94,7 @@ export default class App extends Component<Props> {
     }
 
     if (this.state.hashes > 0) {
-      style.color = 'red'
+      style.color = "#C32CF5" //'red'
     } else if (this.state.loading) {
       style.color = 'black'
     }
@@ -138,7 +138,7 @@ export default class App extends Component<Props> {
           <Switch
             onValueChange = { () => this.onTogglePrivacyMode() }
             trackColor={{
-              true: PRIVACY_MODE,
+              true: "#C32CF5",
             }}      
             thumbColor={'black'}
             value = {this.state.privacy_mode}
@@ -146,7 +146,7 @@ export default class App extends Component<Props> {
         </View>
         <Button
 	        title="Search"
-          color="#0F6AAB"
+          color="#246DF5"
           onPress={() => this.onSearchButtonPress(this.state.text)}
 	      />
 
@@ -166,12 +166,12 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: '#8fa0bc',
+    backgroundColor: '#AFB8FA', //#6553F5', //'#8fa0bc',
     flex: 1,
     justifyContent: 'center',
   },
   input_text: {
-    backgroundColor: PRIVACY_MODE,
+    backgroundColor: "#7BC3F9", //PRIVACY_MODE,
     borderColor: 'gray',
     borderWidth: 1,
     height: 40,
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   welcome: {
-    color: '#333333',
+    color: '#6752F5', //#6553F5', //'#333333',
     fontSize: 30,
     textAlign: 'center',
     margin: 10,
