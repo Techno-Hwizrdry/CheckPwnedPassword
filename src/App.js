@@ -1,4 +1,9 @@
-
+/*
+ *  CheckPwnedPassword
+ *  Author:  Alexan Mardigian
+ *  Version: 0.1
+ *  Copyright 2019, Alexan Mardigian, All rights reserved.
+*/
 
 import React, { Component } from 'react';
 import { Button, Platform, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
@@ -13,7 +18,7 @@ export default class App extends Component<Props> {
   constructor(props) {
     super(props)
 
-    this.state = { text: 'Stuff',
+    this.state = { text: '',
                    hashes: 0,
                    loaded: false,
                    loading: false,
@@ -120,7 +125,8 @@ export default class App extends Component<Props> {
           style={styles.input_text}
           secureTextEntry={this.state.privacy_mode}
           password={true}
-          placeholder="To get start type password here"
+          placeholder="type password here"
+          placeholderTextColor="#C32CF5"
           onChangeText={(text) => this.setState({text})}
           value={this.state.text}
           autoCorrect={false}
