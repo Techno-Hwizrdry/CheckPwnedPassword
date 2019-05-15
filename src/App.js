@@ -7,6 +7,7 @@ import { sha1 } from 'react-native-sha1';
 
 const PASSWORD_API = "https://api.pwnedpasswords.com/range/"
 const PREFIX_CHARS = 5  // Amount of characters in the hash prefix.
+const PRIVACY_MODE = "#C5D4ED"
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -14,7 +15,7 @@ export default class App extends Component<Props> {
     super(props)
 
     this.state = { text: 'Stuff',
-                   hashes: '',
+                   hashes: 0,
                    loaded: false,
                    privacy_mode: false,
                  }
@@ -71,11 +72,40 @@ export default class App extends Component<Props> {
     this.setState({ privacy_mode: !this.state.privacy_mode })
   }
 
+  /*
+    This method will set the color of occurance <Text> component.
+    If no hashes were found, then the <Text> color will be purple.
+    Otherwise, it will be red.
+  */
+  occuranceStyle() {
+    var style = {
+      color: 'purple',
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginTop: 30,
+      textAlign: 'center',
+    }
+
+    if (this.state.hashes > 0) {
+      style.color = 'red'
+    }
+
+    return style
+ }
+
+
   render() {
-    let result = ""
+    let result  = ""
+    let comment = ""
 
     if (this.state.loaded) {
       result = "Found in " + this.state.hashes + " database breaches."
+
+      if (this.state.hashes == 0) {
+        comment = "Yay!...but use with caution."
+      } else {
+        comment = "It is recommened that you do not use that password."
+      }
     }
 
     return (
@@ -96,16 +126,21 @@ export default class App extends Component<Props> {
           <Text style={styles.privacy_mode}>Privacy Mode</Text>
           <Switch
             onValueChange = { () => this.onTogglePrivacyMode() }
+            trackColor={{
+              true: PRIVACY_MODE,
+            }}      
+            thumbColor={'black'}
             value = {this.state.privacy_mode}
           />
         </View>
         <Button
 	        title="Go"
-          color="#841584"
+          color="#0F6AAB"
           onPress={() => this.onGoButtonPress(this.state.text)}
 	      />
 
-        <Text style={styles.occurances}>{result}</Text>
+        <Text style={this.occuranceStyle()}>{result}</Text>
+        <Text style={styles.comment}>{comment}</Text>
 
       </View>
     );
@@ -113,21 +148,22 @@ export default class App extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
+  comment: {
+    textAlign: 'center',
+    color: '#333333',
+    marginTop: 10,
+  },
   container: {
+    alignItems: 'center',
+    backgroundColor: '#8fa0bc',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   input_text: {
-    height: 40,
+    backgroundColor: PRIVACY_MODE,
     borderColor: 'gray',
-    borderWidth: 1
-  },
-  occurances: {
-    fontSize: 20,
-    marginTop: 30,
-    textAlign: 'center',
+    borderWidth: 1,
+    height: 40,
   },
   privacy_container: {
     color: '#000000',
@@ -141,6 +177,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   welcome: {
+    color: '#333333',
     fontSize: 30,
     textAlign: 'center',
     margin: 10,
