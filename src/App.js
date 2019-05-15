@@ -7,7 +7,6 @@ import { sha1 } from 'react-native-sha1';
 
 const PASSWORD_API = "https://api.pwnedpasswords.com/range/"
 const PREFIX_CHARS = 5  // Amount of characters in the hash prefix.
-const PRIVACY_MODE = "#C5D4ED"
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -85,8 +84,8 @@ export default class App extends Component<Props> {
     Otherwise, it will be red.
   */
   occuranceStyle() {
-    var style = {
-      color: "#3865F5", //'purple',
+    let style = {
+      color: "#3865F5",
       fontSize: 20,
       fontWeight: 'bold',
       marginTop: 30,
@@ -94,29 +93,23 @@ export default class App extends Component<Props> {
     }
 
     if (this.state.hashes > 0) {
-      style.color = "#C32CF5" //'red'
-    } else if (this.state.loading) {
-      style.color = 'black'
+      style.color = "#C32CF5"
     }
 
     return style
- }
-
+  }
 
   render() {
     let result  = ""
     let comment = ""
+    let occurance_style = this.occuranceStyle()
 
     if (this.state.loaded) {
-      result = "Found in " + this.state.hashes + " database breaches."
-
-      if (this.state.hashes == 0) {
-        comment = "Yay!...but use with caution."
-      } else {
-        comment = "It is recommened that you do not use that password."
-      }
+      result  = "Found in " + this.state.hashes + " database breaches."
+      comment = this.state.hashes == 0 ? "Yay!...but use with caution." : "It is recommened that you do not use that password."
     } else if (this.state.loading) {
       result = "Loading..."
+      occurance_style.color = 'black'
     }
 
     return (
@@ -150,7 +143,7 @@ export default class App extends Component<Props> {
           onPress={() => this.onSearchButtonPress(this.state.text)}
 	      />
 
-        <Text style={this.occuranceStyle()}>{result}</Text>
+        <Text style={occurance_style}>{result}</Text>
         <Text style={styles.comment}>{comment}</Text>
 
       </View>
@@ -166,12 +159,12 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: '#AFB8FA', //#6553F5', //'#8fa0bc',
+    backgroundColor: '#AFB8FA',
     flex: 1,
     justifyContent: 'center',
   },
   input_text: {
-    backgroundColor: "#7BC3F9", //PRIVACY_MODE,
+    backgroundColor: "#7BC3F9",
     borderColor: 'gray',
     borderWidth: 1,
     height: 40,
@@ -188,8 +181,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   welcome: {
-    color: '#6752F5', //#6553F5', //'#333333',
+    color: '#6752F5',
     fontSize: 30,
+    //fontWeight: 'bold',
     textAlign: 'center',
     margin: 10,
     marginBottom: 30,
