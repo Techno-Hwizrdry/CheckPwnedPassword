@@ -17,12 +17,17 @@ export default class App extends Component<Props> {
     this.state = { text: 'Stuff',
                    hashes: 0,
                    loaded: false,
+                   loading: false,
                    privacy_mode: false,
                  }
-    this.onGoButtonPress = this.onGoButtonPress.bind(this);
+    this.onSearchButtonPress = this.onSearchButtonPress.bind(this);
     this.onTogglePrivacyMode = this.onTogglePrivacyMode.bind(this);
   };
 
+  /*
+    This method will convert the text response, from the API fetch,
+    to a JSON object so that a search for input hash can be conducted.
+  */
   textResponseToJSON(raw_text) {
     let text = raw_text.replace(/\r?\n|\r/g, '\",\"')
 
@@ -55,14 +60,16 @@ export default class App extends Component<Props> {
 
       this.setState( {hashes: database_breach_count} )
       this.setState( {loaded: true} )
+      this.setState( {loading: false} )
     })
     .catch((error) => {
       console.error(error);
     });
   }
 
-  onGoButtonPress(password) {
+  onSearchButtonPress(password) {
     this.setState( {loaded: false} )
+    this.setState( {loading: true} )
     sha1(password).then( hash => {
       this.getHashSuffixesFromApi(hash)
     })
@@ -88,6 +95,8 @@ export default class App extends Component<Props> {
 
     if (this.state.hashes > 0) {
       style.color = 'red'
+    } else if (this.state.loading) {
+      style.color = 'black'
     }
 
     return style
@@ -106,6 +115,8 @@ export default class App extends Component<Props> {
       } else {
         comment = "It is recommened that you do not use that password."
       }
+    } else if (this.state.loading) {
+      result = "Loading..."
     }
 
     return (
@@ -134,9 +145,9 @@ export default class App extends Component<Props> {
           />
         </View>
         <Button
-	        title="Go"
+	        title="Search"
           color="#0F6AAB"
-          onPress={() => this.onGoButtonPress(this.state.text)}
+          onPress={() => this.onSearchButtonPress(this.state.text)}
 	      />
 
         <Text style={this.occuranceStyle()}>{result}</Text>
