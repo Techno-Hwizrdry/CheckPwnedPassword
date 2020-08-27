@@ -130,6 +130,7 @@ export default class App extends Component<Props> {
           onChangeText={(text) => this.setState({text})}
           value={this.state.text}
           autoCorrect={false}
+          onSubmitEditing={() => this.onSearchButtonPress(this.state.text)}
           returnKey="go"
         />
         <View style={styles.privacy_container}>

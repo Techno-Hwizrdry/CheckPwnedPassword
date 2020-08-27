@@ -9,3 +9,5 @@ Enter the following commands at the command line:
 1. git clone https://github.com/Techno-Hwizrdry/CheckPwnedPassword.git
 2. cd checkpwnedpassword
 3. npm install
+4. cp android/gradle.properties_example android/gradle.properties
+5. Add key and store passwords to android/gradle.properties
