@@ -190,7 +190,6 @@ const styles = StyleSheet.create({
   welcome: {
     color: '#6752F5',
     fontSize: 30,
-    //fontWeight: 'bold',
     textAlign: 'center',
     margin: 10,
     marginBottom: 30,
