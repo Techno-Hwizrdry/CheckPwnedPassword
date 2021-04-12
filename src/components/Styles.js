@@ -1,32 +1,54 @@
 import { StyleSheet } from "react-native";
 
-export default StyleSheet.create({
+const BLACK = '#000000';
+const BACKGROUND = '#AFB8FA';
+const DARK = '#DFE4EA';
+const DARKGRAY = '#333333';
+const TEXTINPUTCOLOR = '#7BC3F9';
+const WHITE = '#FFFFFF';
+
+const ELEVATION = 30;
+const RADIUS = 12;
+const SHADOW_SEARCHBUTTON = { height: -12, width: -12 };
+
+const INPUTSHADOWS = {
+  elevation: ELEVATION,
+  shadowOffset: SHADOW_SEARCHBUTTON,
+  shadowColor: '#62d5ff',
+  shadowOpacity: 1.0,
+  shadowRadius: 18
+}
+
+const styles = StyleSheet.create({
     comment: {
       textAlign: 'center',
-      color: '#333333',
+      color: DARKGRAY,
       marginTop: 10
     },
     container: {
       alignItems: 'center',
-      backgroundColor: '#AFB8FA',
+      backgroundColor: BACKGROUND,
+      elevation: 3,
       flex: 1,
       justifyContent: 'center'
     },
     input_text: {
-      backgroundColor: "#7BC3F9",
-      borderColor: 'gray',
-      borderWidth: 1,
-      height: 40
+      ...INPUTSHADOWS,
+      backgroundColor: BACKGROUND,
+      borderRadius: RADIUS,
+      height: 40,
+      width: 150,
+      textAlign: 'center'
     },
     privacy_container: {
-      color: '#000000',
+      color: BLACK,
       flexDirection: 'row',
       margin: 25,
-      textAlign: 'center'
+      textAlign: 'center',
     },
     privacy_mode: {
       textAlign: 'center',
-      color: '#333333',
+      color: DARKGRAY,
       marginBottom: 5
     },
     found: {
@@ -37,21 +59,34 @@ export default StyleSheet.create({
       textAlign: 'center'
     },
     loading: {
-      color: "#000000",
+      color: BLACK,
       fontSize: 20,
       fontWeight: 'bold',
       marginTop: 30,
       textAlign: 'center'
     },
     not_found: {
-      color: "#3865F5",
+      color: "#2C0452",
       fontSize: 20,
       fontWeight: 'bold',
       marginTop: 30,
       textAlign: 'center'
     },
+    searchbutton: {
+      ...INPUTSHADOWS,
+      alignItems: 'center',
+      backgroundColor: BACKGROUND,
+      borderRadius: RADIUS,
+      color: BLACK,
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    searchbuttontxt: {
+      fontWeight: 'bold',
+      padding: 10
+    },
     welcome: {
-      color: '#6752F5',
+      color: "#2C0452",
       fontSize: 30,
       textAlign: 'center',
       margin: 10,
@@ -59,7 +94,9 @@ export default StyleSheet.create({
     },
     instructions: {
       textAlign: 'center',
-      color: '#333333',
+      color: DARKGRAY,
       marginBottom: 5
     },
   });
+
+export { styles };

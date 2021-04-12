@@ -6,9 +6,9 @@
 */
 
 import React, { useState } from 'react';
-import { Button, Switch, Text, TextInput, View } from 'react-native';
+import { Button, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import * as Crypto from 'expo-crypto';
-import styles from "./Styles";
+import { styles } from "./Styles";
 
 const PASSWORD_API = "https://api.pwnedpasswords.com/range/";
 const PREFIX_CHARS = 5;  // Amount of characters in the hash prefix.
@@ -122,12 +122,12 @@ export default function App() {
                     value = { state.privacyMode }
                 />
             </View>
-            <Button
-	            title="Search"
-                color="#246DF5"
+            <TouchableOpacity
+                style={ styles.searchbutton }
                 onPress={ onSearchButtonPress }
-	        />
-
+            >
+                <Text style={ styles.searchbuttontxt }>SEARCH</Text>
+            </TouchableOpacity>
             <Text style={ oStyle }>{ result }</Text>
             <Text style={ styles.comment }>{ comment }</Text>
         </View>
