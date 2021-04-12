@@ -2,10 +2,8 @@ import { StyleSheet } from "react-native";
 
 const BLACK = '#000000';
 const BACKGROUND = '#AFB8FA';
-const DARK = '#DFE4EA';
 const DARKGRAY = '#333333';
-const TEXTINPUTCOLOR = '#7BC3F9';
-const WHITE = '#FFFFFF';
+const TITLE = "#2C0452";
 
 const ELEVATION = 30;
 const RADIUS = 12;
@@ -66,7 +64,7 @@ const styles = StyleSheet.create({
       textAlign: 'center'
     },
     not_found: {
-      color: "#2C0452",
+      color: TITLE,
       fontSize: 20,
       fontWeight: 'bold',
       marginTop: 30,
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
       padding: 10
     },
     welcome: {
-      color: "#2C0452",
+      color: TITLE,
       fontSize: 30,
       textAlign: 'center',
       margin: 10,

@@ -6,7 +6,7 @@
 */
 
 import React, { useState } from 'react';
-import { Button, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import * as Crypto from 'expo-crypto';
 import { styles } from "./Styles";
 
@@ -24,7 +24,7 @@ export default function App() {
     });
 
     const handlePrivacyMode = () => {
-        setState( {...state, 'privacyMode': !state['privacyMode']} );
+        setState( {...state, privacyMode: !state.privacyMode} );
     }
     
     const handlePwdInput = (pwd) => {
@@ -117,8 +117,8 @@ export default function App() {
                 <Text style={ styles.privacy_mode }>Privacy Mode</Text>
                 <Switch
                     onValueChange = { handlePrivacyMode }
-                    trackColor={{ true: styles.found.color }}      
-                    thumbColor={ 'black' }
+                    trackColor={{ true: styles.found.color, false: 'cyan' }}      
+                    thumbColor={ styles.welcome.color }
                     value = { state.privacyMode }
                 />
             </View>
