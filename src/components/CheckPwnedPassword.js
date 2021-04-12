@@ -18,7 +18,6 @@ export default function App() {
         hashes: 0,
         isLoaded: false,
         isLoading: false,
-        privacy_mode: false,
         privacyMode: false,
         text: ''
     });
