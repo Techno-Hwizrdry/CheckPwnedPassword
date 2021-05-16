@@ -1,7 +1,7 @@
 /*
  *  CheckPwnedPassword
  *  Author:  Alexan Mardigian
- *  Version: 1.0
+ *  Version: 2.0
  *  Copyright 2021, Alexan Mardigian, All rights reserved.
 */
 
